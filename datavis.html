@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>深圳高峰期路口延误指数评级</title>
+  <style>
+    html,
+    body,
+    #map {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .demo-title {
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 18px;
+      margin: 0;
+      color: rgb(180, 180, 190);
+    }
+
+    h3 {
+      font-size: 12px;
+      font-weight: normal;
+      margin-top: 5px;
+      color: rgb(150,150,150);
+    }
+  </style>
+</head>
+
+<body>
+<div class="demo-title">
+  <h1>北京市2017年2月23日-25日骚扰短信发出坐标</h1>
+  <h3>每个圆圈代表一个位置，颜色浓度越浓代表信号越集中</h3>
+</div>
+<div id="map"></div>
+<script src="https://webapi.amap.com/maps?v=2.0&key=48133e705f72cc77371b7832867366d3"></script>
+<script src="https://webapi.amap.com/loca?v=2.0.0&key=48133e705f72cc77371b7832867366d3"></script>
+<script>
+
+  var map = window.map = new AMap.Map('map', {
+    zoom: 11.7,
+    zooms: [9, 22],
+    center: [116.3912757, 39.906217],
+    pitch: 40,
+    showLabel: false,
+    mapStyle: 'amap://styles/45311ae996a8bea0da10ad5151f72979',
+    viewMode: '3D',
+  });
+
+  var loca = window.loca = new Loca.Container({
+    map,
+  });
+
+  // 蓝色普通点
+  var geo = new Loca.GeoJSONSource({
+    // url: 'https://a.amap.com/Loca/static/loca-v2/demos/mock_data/sz_road.json',
+    url: '/csv/javascript/20170223.json'
+  });
+  var scatter = new Loca.ScatterLayer({
+    zIndex: 111,
+    opacity: 1,
+    visible: true,
+    zooms: [9, 22],
+  });
+  scatter.setSource(geo);
+  scatter.setStyle({
+    color: 'rgba(143,156,75,0.1)',
+    unit: 'meter',
+    size: [300, 500],
+    borderWidth: 0,
+  });
+  loca.add(scatter);
+
+  // 红色呼吸点
+  var geoLevelF = new Loca.GeoJSONSource({
+    // data: [],
+    // url: 'https://a.amap.com/Loca/static/loca-v2/demos/mock_data/sz_road_F.json',
+    url: '/csv/javascript/20170224.json'
+  });
+  var breathRed = new Loca.ScatterLayer({
+    loca,
+    zIndex: 113,
+    opacity: 1,
+    visible: true,
+    zooms: [9, 22],
+  });
+  breathRed.setSource(geoLevelF);
+  breathRed.setStyle({
+    color: 'rgba(243,56,175,0.1)',
+    unit: 'meter',
+    size: [300, 500],
+    borderWidth: 0,
+    // texture: 'https://a.amap.com/Loca/static/loca-v2/demos/images/breath_red.png',
+    duration: 500,
+    animate: true,
+  });
+
+  // 黄色呼吸点
+  var geoLevelE = new Loca.GeoJSONSource({
+    // data: [],
+    // url: 'https://a.amap.com/Loca/static/loca-v2/demos/mock_data/sz_road_E.json',
+    url: '/csv/javascript/20170225.json'
+  });
+  var breathYellow = new Loca.ScatterLayer({
+    loca,
+    zIndex: 112,
+    opacity: 1,
+    visible: true,
+    zooms: [9, 22],
+  });
+  breathYellow.setSource(geoLevelE);
+  breathYellow.setStyle({
+    color: 'rgba(243,253,75,0.1)',
+    unit: 'meter',
+    size: [300, 500],
+    borderWidth: 0,
+    // texture: 'https://a.amap.com/Loca/static/loca-v2/demos/images/breath_yellow.png',
+    duration: 4000,
+    animate: true,
+  });
+
+  // 启动渲染动画
+  loca.animate.start();
+
+  var dat = new Loca.Dat();
+  dat.addLayer(scatter, ' 贴地');
+  dat.addLayer(breathRed, '红色');
+  dat.addLayer(breathYellow, '黄色');
+
+</script>
+</body>
+
+</html>
