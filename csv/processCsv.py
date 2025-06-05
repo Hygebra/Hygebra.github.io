@@ -11,18 +11,19 @@ current_date = start_date
 while current_date <= end_date:
     data = []
     date = current_date.strftime('%Y%m%d')
+    date1 = current_date.strftime('%Y-%m-%d')
     print(date)
     with open("data/" + date + ".csv", newline='', encoding='utf-8') as f:
         reader = csv.reader(f)
         line = 1
         for row in reader:
             if line != 1:
-                item = {'md5': row[0], 'content': re.sub(r'[\x00-\x1F\x7F]', '', row[1].strip()).replace('"', '\''),
+                item = {'md5': row[0], 'content': re.sub(r'[\x00-\x1F\x7F]', '', row[1].strip()).replace('"', '\'').replace('\\', ''),
                         'dial': row[2], 'connect': row[3], 'receive': row[4],
                         'E': row[5], 'N': row[6]}
                 data.append(item)
             line += 1
-    with open("javascript/" + date + '.json', mode='w', encoding='utf-8') as f:
+    with open("javascript/" + date1 + '.json', mode='w', encoding='utf-8') as f:
         f.write('{\n\t"type": "FeatureCollection",\n\t"features": [\n')
         for i in range(0, len(data)):
             item = data[i]

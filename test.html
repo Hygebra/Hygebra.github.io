@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ThemeRiver from CSV</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    .area {
+      fill-opacity: 0.8;
+    }
+
+    .axis text {
+      font-size: 12px;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+    }
+  </style>
+</head>
+<body>
+  <svg width="960" height="500"></svg>
+
+  <script>
+    const svg = d3.select("svg"),
+          width = +svg.attr("width"),
+          height = +svg.attr("height");
+
+    const margin = {top: 20, right: 30, bottom: 30, left: 50},
+          innerWidth = width - margin.left - margin.right,
+          innerHeight = height - margin.top - margin.bottom;
+
+    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const parseDate = d3.timeParse("%Y");
+
+    const keys = ["phone","conntime","recitime"];
+
+    const color = d3.scaleOrdinal()
+      .domain(keys)
+      .range(["#66c2a5", "#fc8d62", "#8da0cb"]);
+
+    d3.csv("csv/data/20170223.csv").then(rawData => {
+      // 处理数据
+      rawData.forEach(d => {
+        d.date = parseDate(d.year);
+        keys.forEach(k => d[k] = +d[k]); // 转换为数值
+      });
+
+      const stack = d3.stack()
+        .keys(keys)
+        .offset(d3.stackOffsetSilhouette); // ThemeRiver 样式
+
+      const series = stack(rawData);
+
+      const x = d3.scaleTime()
+        .domain(d3.extent(rawData, d => d.date))
+        .range([0, innerWidth]);
+
+      const y = d3.scaleLinear()
+        .domain([
+          d3.min(series, layer => d3.min(layer, d => d[0])),
+          d3.max(series, layer => d3.max(layer, d => d[1]))
+        ])
+        .range([innerHeight, 0]);
+
+      const area = d3.area()
+        .x(d => x(d.data.date))
+        .y0(d => y(d[0]))
+        .y1(d => y(d[1]))
+        .curve(d3.curveBasis);
+
+      g.selectAll("path")
+        .data(series)
+        .enter().append("path")
+          .attr("class", "area")
+          .attr("d", area)
+          .attr("fill", ({key}) => color(key));
+
+      g.append("g")
+        .attr("transform", `translate(0,${innerHeight})`)
+        .call(d3.axisBottom(x));
+
+      g.append("g")
+        .call(d3.axisLeft(y).ticks(5));
+    });
+  </script>
+</body>
+</html>

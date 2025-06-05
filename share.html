@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北京市2017年2月-4月骚扰短信时空域分析</title>
+    <style>
+        html,
+        body,
+        #map {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .demo-title {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin: 0;
+            color: rgb(87, 87, 94);
+        }
+
+        h2 {
+            font-size: 22px;
+            margin: 0;
+            color: rgb(87, 87, 94);
+        }
+
+        h3 {
+            font-size: 16px;
+            font-weight: normal;
+            margin-top: 5px;
+            color: rgb(150,150,150);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-title">
+        <h1>北京市2017年2月-4月骚扰短信时空域分析</h1>
+        <h2 type="text" id="calendar" value = "">点击选择显示日期：无</h2>
+        <h3>每个圆圈代表一个位置，颜色浓度越浓代表信号越集中</h3>
+    </div>
+
+    
+    <div id="map"></div>
+    <script src="https://webapi.amap.com/maps?v=2.0&key=48133e705f72cc77371b7832867366d3"></script>
+    <script src="https://webapi.amap.com/loca?v=2.0.0&key=48133e705f72cc77371b7832867366d3"></script>
+    <script>
+      var map = window.map = new AMap.Map('map', {
+          zoom: 11.7,
+          zooms: [9, 22],
+          center: [116.3912757, 39.906217],
+          pitch: 40,
+          showLabel: false,
+        //   mapStyle: 'amap://styles/45311ae996a8bea0da10ad5151f72979',
+        //   mapStyle: 'amap://styles/212b098c51dfc53a0a99v2b1e147a7b3',
+          mapStyle: 'amap://styles/5509fa46c1b0720ee57b50476e48a1df',
+          viewMode: '3D',
+      });
+
+      var loca = window.loca = new Loca.Container({
+          map,
+      });
+    </script>
+    <!-- <script src = "breathPoints.js"></script> -->
+</body>
+
+</html>
