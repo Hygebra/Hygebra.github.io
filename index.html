@@ -4,136 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>北京市2017年2月-4月骚扰短信时空域分析</title>
+    <title>Haishu Su - Homepage</title>
     <!-- <script src="d3.min.js"></script> -->
     <script src="d3.min.js"></script>
-    <style>
-        html,
-        body,
-        #map {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .demo-title {
-            position: absolute;
-            top: 25px;
-            left: 25px;
-            z-index: 1;
-        }
-
-        h1 {
-            font-size: 26px;
-            margin: 0;
-            color: rgb(255, 255, 255);
-        }
-
-        h2 {
-            font-size: 22px;
-            margin: 0;
-            color: rgb(255, 255, 255);
-        }
-
-        h3 {
-            font-size: 16px;
-            font-weight: normal;
-            margin-top: 5px;
-            color: rgb(212, 212, 212);
-        }
-        .chart {
-            position: fixed;      /* 固定在页面某个位置 */
-            bottom: 0;            /* 离底部为0 */
-            left: 0;              /* 离左侧为0 */
-            background-color: transparent;
-            color: white;
-            padding: 10px;
-        }
-        .rightChart {
-            position: fixed;      /* 固定在页面某个位置 */
-            bottom: 0;            /* 离底部为0 */
-            right: 0;              
-            background-color: transparent;
-            color: white;
-            padding: 10px;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="demo-title">
-        <h1>北京市2017年2月-4月骚扰短信时空域分析</h1>
-        <h2 type="text" id="calendar" value = "">点击选择显示日期：无</h2>
-        <h3>每个圆圈代表一个位置，颜色浓度越浓代表信号越集中</h3>
-        <svg id="sample" width="30" height="300"></svg>
-        <!-- <h2 value="false">收起</h3> -->
+    <div class="masthead">
+        <div class="masthead__inner-wrap">
+            <div class="masthead__menu">
+            <nav id="site-nav" class="greedy-nav">
+                <button><div class="navicon"></div></button>
+                <ul class="visible-links">
+                <li class="masthead__menu-item masthead__menu-item--lg masthead__menu-home-item"><a href="#about-me">Homepage</a></li>
+                
+                    <li class="masthead__menu-item"><a href="/#about-me">About Me</a></li>
+                
+                    <li class="masthead__menu-item"><a href="/#news">News</a></li>
+                
+                    <li class="masthead__menu-item"><a href="/#publications">Publications</a></li>
+                
+                    <li class="masthead__menu-item"><a href="/#honors-and-awards">Honors and Awards</a></li>
+                
+                    <li class="masthead__menu-item"><a href="/#education">Education</a></li>
+                
+                    <li class="masthead__menu-item"><a href="/#work-experience">Work Experience</a></li>
+                </ul>
+                <ul class="hidden-links hidden"></ul>
+            </nav>
+            </div>
+        </div>
     </div>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css"> -->
-    <link rel="stylesheet" type="text/css" href="calendar/theme_dark.css">
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
-    <script src = "calendar/flatpickr"></script>
-
-    <div id="container"></div>
-    <script type="text/javascript">
-    window._AMapSecurityConfig = {
-        securityJsCode: "cf0e270b9c9d7e052b4d4e6cb66d2736",
-    };
-    </script>
-    <!-- <script type="text/javascript">
-    //地图初始化应该在地图容器div已经添加到DOM树之后
-    var map = new AMap.Map("container", {
-        zoom: 12,
-    });
-    </script> -->
     
-    
-    <div id="map"></div>
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=48133e705f72cc77371b7832867366d3"></script>
-    <script type="text/javascript" src="https://webapi.amap.com/loca?v=2.0.0&key=48133e705f72cc77371b7832867366d3"></script>
-    <script>
-      var map = window.map = new AMap.Map('map', {
-          zoom: 11.7,
-          zooms: [9, 14],
-          center: [116.3912757, 39.906217],
-          pitch: 40,
-          showLabel: false,
-        //   mapStyle: 'amap://styles/45311ae996a8bea0da10ad5151f72979',
-        //   mapStyle: 'amap://styles/212b098c51dfc53a0a99v2b1e147a7b3',
-          mapStyle: 'amap://styles/5bf312bd2b4d5e806ca8893e84bd53d5',
-          viewMode: '3D',
-      });
-
-      var loca = window.loca = new Loca.Container({
-          map,
-      });
-    </script>
-
-    <script src="calendar.js"></script>
-    <script src="showDate.js"></script>
-    <!-- <script src = "breathPoints.js"></script> -->
-
-    <div class="chart">
-        <h2>诈骗短信数量的每日时域分布</h2>
-
-        <!-- <label for="dateSelector">选择日期：</label>
-        <select id="dateSelector">
-        <option value="overview">总览（按天）</option>
-        </select> -->
-
-        <svg id="chart" width="900" height="400"></svg>
-<!-- 
-        <script>
-        
-        </script> -->
-    </div>
-    <div class="rightChart">
-        <h2>来电号码分布</h2>
-        <svg id="rightBottomChart" width="900" height="900"></svg>
-    </div>
-    <script src = "loadDayPosition.js"></script>
 </body>
 
 </html>
